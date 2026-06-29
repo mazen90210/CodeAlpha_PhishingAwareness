@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phishing Awareness Training - CodeAlpha</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f5f5f5;color:#1a1a1a;padding:2rem 1rem}
+.container{max-width:780px;margin:0 auto}
+.hero{background:#fff0f0;border:1px solid #ffcccc;border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;display:flex;gap:16px;align-items:center}
+.hero-icon{width:52px;height:52px;border-radius:50%;background:#e53e3e;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:24px}
+.hero h1{font-size:22px;font-weight:700;color:#c53030;margin-bottom:4px}
+.hero p{font-size:13px;color:#c53030;line-height:1.5}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.5rem}
+.stat{background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;text-align:center}
+.stat-num{font-size:24px;font-weight:700;color:#2d3748}
+.stat-label{font-size:12px;color:#718096;margin-top:2px}
+.nav{display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap}
+.nav button{padding:8px 14px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;color:#4a5568;cursor:pointer;font-size:13px;transition:all 0.2s}
+.nav button:hover{background:#fff5f5;color:#c53030;border-color:#feb2b2}
+.nav button.active{background:#fff0f0;color:#c53030;border-color:#fc8181}
+.section{display:none}.section.active{display:block}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:1.25rem;margin-bottom:1rem}
+.card-danger{border-left:4px solid #e53e3e}
+.card-warning{border-left:4px solid #d69e2e}
+.card-success{border-left:4px solid #38a169}
+.card-accent{border-left:4px solid #3182ce}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;margin-bottom:10px}
+.bd{background:#fff0f0;color:#c53030}
+.bs{background:#f0fff4;color:#276749}
+.bw{background:#fffbeb;color:#b7791f}
+.ba{background:#ebf8ff;color:#2b6cb0}
+h2{font-size:17px;font-weight:700;color:#2d3748;margin-bottom:6px}
+h3{font-size:15px;font-weight:600;color:#2d3748;margin-bottom:6px}
+p,li{font-size:13px;color:#4a5568;line-height:1.65}
+ul{padding-left:1.2rem;margin-top:6px}
+li{margin-bottom:4px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tip-row{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:8px;margin:5px 0}
+.tip-s{background:#f0fff4}.tip-s span,.tip-s p{color:#276749}
+.tip-d{background:#fff0f0}.tip-d span,.tip-d p{color:#c53030}
+.tip-w{background:#fffbeb}.tip-w span,.tip-w p{color:#b7791f}
+.tip-row span{font-size:16px;flex-shrink:0}
+.email-mock{background:#fff;border:1px solid #fc8181;border-radius:12px;overflow:hidden;margin-bottom:1rem}
+.em-head{padding:12px 16px;border-bottom:1px solid #e2e8f0;background:#fff5f5}
+.em-row{display:flex;gap:8px;font-size:12px;margin:3px 0}
+.em-label{color:#718096;min-width:52px;flex-shrink:0}
+.em-red{color:#c53030;font-weight:600}
+.em-body{padding:14px 16px;font-size:13px;color:#4a5568;line-height:1.7}
+.flag{display:flex;gap:8px;align-items:center;padding:7px 12px;background:#fff0f0;border-radius:8px;margin:4px 0;font-size:12px;color:#c53030}
+.type-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
+.type-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:1rem}
+.type-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:20px}
+.ti-d{background:#fff0f0}.ti-w{background:#fffbeb}.ti-a{background:#ebf8ff}.ti-s{background:#f0fff4}
+.checklist{list-style:none;padding:0;margin:0}
+.checklist li{padding:8px 0;border-bottom:1px solid #e2e8f0;display:flex;gap:10px;align-items:flex-start}
+.checklist li:last-child{border-bottom:none}
+.check-icon{color:#38a169;font-size:16px;flex-shrink:0;margin-top:1px}
+.se-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:1rem;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start}
+.se-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#fffbeb;font-size:20px}
+.quiz-q{font-size:15px;font-weight:600;color:#2d3748;margin-bottom:14px;line-height:1.5}
+.quiz-opt{display:block;width:100%;text-align:left;padding:10px 14px;border:1px solid #e2e8f0;border-radius:8px;background:#f7fafc;color:#2d3748;cursor:pointer;font-size:13px;margin:6px 0;transition:all 0.15s}
+.quiz-opt:hover{border-color:#90cdf4;background:#ebf8ff;color:#2b6cb0}
+.quiz-opt.correct{background:#f0fff4;border-color:#9ae6b4;color:#276749;pointer-events:none}
+.quiz-opt.wrong{background:#fff0f0;border-color:#fc8181;color:#c53030;pointer-events:none}
+.quiz-opt.disabled{pointer-events:none;opacity:0.6}
+.fb{padding:10px 14px;border-radius:8px;font-size:13px;margin-top:8px;line-height:1.5}
+.fb-s{background:#f0fff4;color:#276749}
+.fb-d{background:#fff0f0;color:#c53030}
+.next-btn{margin-top:12px;padding:8px 20px;border-radius:8px;border:1px solid #90cdf4;background:#ebf8ff;color:#2b6cb0;cursor:pointer;font-size:13px}
+.prog-bar{height:5px;background:#e2e8f0;border-radius:3px;margin-bottom:1.5rem;overflow:hidden}
+.prog-fill{height:100%;background:#e53e3e;border-radius:3px;transition:width 0.3s}
+.score-wrap{text-align:center;padding:2rem 1rem}
+.score-circle{width:100px;height:100px;border-radius:50%;border:3px solid #3182ce;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 1rem}
+.score-num{font-size:28px;font-weight:700;color:#3182ce}
+.score-sub{font-size:12px;color:#718096}
+.restart-btn{padding:8px 20px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;color:#2d3748;cursor:pointer;font-size:13px;margin-top:1rem}
+.section-hdr{display:flex;align-items:center;gap:10px;margin-bottom:1rem}
+.section-hdr-icon{width:34px;height:34px;border-radius:8px;background:#fff0f0;display:flex;align-items:center;justify-content:center;font-size:18px}
+footer{text-align:center;margin-top:2rem;padding-top:1rem;border-top:1px solid #e2e8f0;font-size:12px;color:#718096}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="hero">
+  <div class="hero-icon">🛡️</div>
+  <div>
+    <h1>Phishing Awareness Training</h1>
+    <p>Learn to recognize, avoid, and report phishing attacks. Complete all sections and test your knowledge with the quiz.</p>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="stat-num">3.4B</div><div class="stat-label">Phishing emails sent daily</div></div>
+  <div class="stat"><div class="stat-num">36%</div><div class="stat-label">Of breaches involve phishing</div></div>
+  <div class="stat"><div class="stat-num">$4.9M</div><div class="stat-label">Average breach cost</div></div>
+</div>
+
+<div class="nav">
+  <button class="active" onclick="show('what',this)">📖 What is phishing</button>
+  <button onclick="show('emails',this)">📧 Email red flags</button>
+  <button onclick="show('types',this)">📋 Attack types</button>
+  <button onclick="show('social',this)">🧠 Social engineering</button>
+  <button onclick="show('protect',this)">🔒 How to protect yourself</button>
+  <button onclick="show('quiz',this)">❓ Quiz</button>
+</div>
+
+<div id="what" class="section active">
+  <div class="section-hdr"><div class="section-hdr-icon">📖</div><h2>What is phishing?</h2></div>
+  <div class="card card-danger">
+    <span class="badge bd">⚠️ Definition</span>
+    <h3>The core concept</h3>
+    <p>Phishing is a cyberattack where criminals impersonate trusted entities — banks, companies, colleagues, or government agencies — to trick you into revealing sensitive information or installing malware.</p>
+  </div>
+  <div class="card card-warning">
+    <span class="badge bw">🔄 How an attack unfolds</span>
+    <h3>Step-by-step attack flow</h3>
+    <ul>
+      <li><strong>Step 1:</strong> Attacker researches the target and crafts a convincing message</li>
+      <li><strong>Step 2:</strong> Victim receives a fake email, SMS, or call from a trusted-looking source</li>
+      <li><strong>Step 3:</strong> Victim clicks a malicious link or downloads an infected attachment</li>
+      <li><strong>Step 4:</strong> Victim is sent to a fake website or malware is silently installed</li>
+      <li><strong>Step 5:</strong> Attacker steals credentials, data, or money</li>
+    </ul>
+  </div>
+  <div class="row2">
+    <div class="card card-accent">
+      <span class="badge ba">Real example</span>
+      <h3>PayPal phishing (2023)</h3>
+      <p>Millions received emails claiming "Your account is limited." A fake PayPal site stole login credentials from thousands of victims worldwide.</p>
+    </div>
+    <div class="card card-accent">
+      <span class="badge ba">Real example</span>
+      <h3>Google Docs scam (2017)</h3>
+      <p>A worm spread via fake Google Docs sharing invites. It tricked users into granting access to their entire Gmail account and contact list.</p>
+    </div>
+  </div>
+</div>
+
+<div id="emails" class="section">
+  <div class="section-hdr"><div class="section-hdr-icon">📧</div><h2>Spotting a phishing email</h2></div>
+  <div class="email-mock">
+    <div class="em-head">
+      <div class="em-row"><span class="em-label">From:</span><span class="em-red">security@paypa1-support.com</span></div>
+      <div class="em-row"><span class="em-label">To:</span><span>you@email.com</span></div>
+      <div class="em-row"><span class="em-label">Subject:</span><span class="em-red">URGENT: Your account will be suspended in 24 hours!</span></div>
+    </div>
+    <div class="em-body">
+      Dear Valued Customer,<br><br>
+      We have detected <strong>suspicious activity</strong> on your account. Your access will be <strong>SUSPENDED</strong> unless you verify your information <strong>immediately</strong>.<br><br>
+      <span style="color:#3182ce;text-decoration:underline">Verify my account now → http://paypa1-verify.xyz/login</span><br><br>
+      This is urgent. Failure to act will result in permanent account closure. Do not ignore this message.<br><br>
+      Regards,<br>PayPal Security Team
+    </div>
+  </div>
+  <h3 style="margin-bottom:8px;font-size:13px;color:#718096">Red flags detected:</h3>
+  <div class="flag">❌ Fake domain: "paypa1-support.com" — notice the number 1 instead of letter l</div>
+  <div class="flag">❌ False urgency: "24 hours", "URGENT", "immediately", "do not ignore"</div>
+  <div class="flag">❌ Threats: "permanent account closure" to pressure you into acting fast</div>
+  <div class="flag">❌ Suspicious link: "paypa1-verify.xyz" — not the real paypal.com</div>
+  <div class="flag">❌ Generic greeting: "Dear Valued Customer" — real companies use your name</div>
+  <div class="flag">❌ Excessive formatting: bold words meant to trigger panic</div>
+</div>
+
+<div id="types" class="section">
+  <div class="section-hdr"><div class="section-hdr-icon">📋</div><h2>Types of phishing attacks</h2></div>
+  <div class="type-grid">
+    <div class="type-card">
+      <div class="type-icon ti-d">📧</div>
+      <span class="badge bd">Most common</span>
+      <h3>Email phishing</h3>
+      <p>Mass emails sent to thousands impersonating banks, services, or companies. Relies on volume — even a small success rate yields results.</p>
+    </div>
+    <div class="type-card">
+      <div class="type-icon ti-w">🎯</div>
+      <span class="badge bw">Targeted</span>
+      <h3>Spear phishing</h3>
+      <p>Highly personalized attack using researched details (name, job, colleagues). Much harder to detect — looks completely legitimate.</p>
+    </div>
+    <div class="type-card">
+      <div class="type-icon ti-w">📱</div>
+      <span class="badge bw">SMS-based</span>
+      <h3>Smishing</h3>
+      <p>Phishing via text messages. "Your package is delayed. Track it: [fake link]" — exploits mobile users who click without checking.</p>
+    </div>
+    <div class="type-card">
+      <div class="type-icon ti-a">📞</div>
+      <span class="badge ba">Voice-based</span>
+      <h3>Vishing</h3>
+      <p>Phone calls from fake bank staff, tech support, or government officials asking you to reveal account details verbally.</p>
+    </div>
+    <div class="type-card">
+      <div class="type-icon ti-d">👑</div>
+      <span class="badge bd">High-value targets</span>
+      <h3>Whaling</h3>
+      <p>Spear phishing targeting executives (CEOs, CFOs). Attackers study the target for weeks to craft highly convincing messages.</p>
+    </div>
+    <div class="type-card">
+      <div class="type-icon ti-s">🌐</div>
+      <span class="badge bs">Website-based</span>
+      <h3>Pharming</h3>
+      <p>Redirects users from a real website to a fake one without any clicking. Even typing the correct URL can lead to the attacker's site.</p>
+    </div>
+  </div>
+</div>
+
+<div id="social" class="section">
+  <div class="section-hdr"><div class="section-hdr-icon">🧠</div><h2>Social engineering tactics</h2></div>
+  <p style="margin-bottom:1rem">Phishing works by exploiting human psychology, not just technology. Here are the main manipulation techniques attackers use:</p>
+  <div class="se-card"><div class="se-icon">⏰</div><div><h3>Urgency and scarcity</h3><p>Creating time pressure ("Act within 24 hours!") forces victims to skip their normal caution and react emotionally rather than rationally.</p></div></div>
+  <div class="se-card"><div class="se-icon">👮</div><div><h3>Authority impersonation</h3><p>Pretending to be a boss, IT department, bank, or government agency. People are conditioned to comply with authority figures without questioning.</p></div></div>
+  <div class="se-card"><div class="se-icon">🤝</div><div><h3>Trust and familiarity</h3><p>Using the victim's name, job title, or references to real colleagues makes the attack feel personal and legitimate, lowering suspicion.</p></div></div>
+  <div class="se-card"><div class="se-icon">⚠️</div><div><h3>Fear and threats</h3><p>"Your account will be permanently closed" or "Legal action will be taken" — threats of consequences trigger panic and override rational thinking.</p></div></div>
+  <div class="se-card"><div class="se-icon">🎁</div><div><h3>Greed and rewards</h3><p>"You've won a prize!" or "Claim your refund now" — the promise of something valuable lowers a victim's guard and motivates quick action.</p></div></div>
+</div>
+
+<div id="protect" class="section">
+  <div class="section-hdr"><div class="section-hdr-icon">🔒</div><h2>How to protect yourself</h2></div>
+  <div class="card" style="margin-bottom:1rem">
+    <h3 style="margin-bottom:10px">Before you click anything</h3>
+    <ul class="checklist">
+      <li><span class="check-icon">✅</span><span>Check the sender's email address carefully — look for misspellings like "paypa1" or extra characters</span></li>
+      <li><span class="check-icon">✅</span><span>Hover over links to see the real URL before clicking — the displayed text and actual URL can be completely different</span></li>
+      <li><span class="check-icon">✅</span><span>Slow down when a message creates urgency — that pressure is the attack working on you</span></li>
+      <li><span class="check-icon">✅</span><span>Never open attachments from unknown senders — even PDFs and Word docs can contain malware</span></li>
+    </ul>
+  </div>
+  <div class="card" style="margin-bottom:1rem">
+    <h3 style="margin-bottom:10px">Secure your accounts</h3>
+    <ul class="checklist">
+      <li><span class="check-icon">✅</span><span>Enable two-factor authentication (2FA) on all important accounts — even if your password is stolen, the attacker can't log in</span></li>
+      <li><span class="check-icon">✅</span><span>Use a password manager and unique passwords for every account — a breach on one site won't affect others</span></li>
+      <li><span class="check-icon">✅</span><span>Keep your browser, OS, and antivirus software updated — patches fix vulnerabilities attackers exploit</span></li>
+    </ul>
+  </div>
+  <div class="tip-row tip-d"><span>🚨</span><p>Never enter passwords on a site you reached by clicking a link in an email. Always navigate directly to the website yourself.</p></div>
+  <div class="tip-row tip-d"><span>🚨</span><p>If you receive a suspicious email from your bank, call them directly using the number on the back of your card — never use the number in the email.</p></div>
+  <div class="tip-row tip-s"><span>💡</span><p>If you think you've been phished: change your passwords immediately, enable 2FA, and report it to your IT department or the impersonated company.</p></div>
+</div>
+
+<div id="quiz" class="section">
+  <div class="section-hdr"><div class="section-hdr-icon">❓</div><h2>Test your knowledge</h2></div>
+  <div class="prog-bar"><div class="prog-fill" id="pbar" style="width:0%"></div></div>
+  <div id="qbox"></div>
+</div>
+
+<footer>
+  <p>Phishing Awareness Training &mdash; CodeAlpha Cybersecurity Internship &mdash; Mazen Yasser</p>
+</footer>
+
+</div>
+<script>
+function show(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='quiz')initQuiz();
+}
+var Qs=[
+  {q:"You receive an email from 'support@paypa1-secure.com' asking you to verify your PayPal account. What is the first red flag you notice?",opts:["The email arrived on a weekend","The sender domain uses '1' instead of 'l' — it's fake","The email has no logo","The email subject is too long"],ans:1,exp:"Attackers use lookalike domains with subtle misspellings (paypa1 vs paypal). Always inspect the full sender email address carefully."},
+  {q:"An SMS reads: 'Your bank account is frozen. Click immediately: bit.ly/unfreeze-now'. What should you do?",opts:["Click the link quickly to prevent your account being closed","Ignore it completely","Call your bank directly using the official number from their website","Reply to ask if it's real"],ans:2,exp:"Never click links in urgent SMS messages. Contact your bank directly using their official phone number found on their website or the back of your card."},
+  {q:"Which of the following is a sign of a phishing website?",opts:["The site uses HTTPS and has a padlock icon","The URL is 'paypal-verify-secure.xyz' instead of 'paypal.com'","The page loads very quickly","The website has a professional-looking design"],ans:1,exp:"Phishing sites use fake domains that look similar to real ones. HTTPS and good design can both be faked — always check the actual domain name carefully."},
+  {q:"What is 'spear phishing' and why is it more dangerous than regular phishing?",opts:["It uses sharper malware to break through antivirus software","It targets specific individuals using personal information, making it far more convincing","It only attacks email servers directly","It's a type of network attack unrelated to email"],ans:1,exp:"Spear phishing uses researched personal details (your name, job, colleagues) to create highly convincing targeted messages — much harder to detect than mass phishing emails."},
+  {q:"An email says 'Your IT department requires you to reset your password immediately or lose system access'. This is an example of which social engineering tactic?",opts:["Greed — promising a reward","Familiarity — using your name","Authority combined with urgency — impersonating IT and creating time pressure","Pharming — redirecting your browser"],ans:2,exp:"This combines authority impersonation (fake IT department) with false urgency (immediate action required). These two tactics together are highly effective at bypassing rational thinking."},
+  {q:"You get an email from your 'CEO' asking you to urgently wire money to a vendor. The email looks completely legitimate. What should you do?",opts:["Wire the money immediately since it's from the CEO","Call the CEO directly on a known phone number to verify the request","Reply to the email asking for confirmation","Check if the email address looks correct, then proceed"],ans:1,exp:"This is a Business Email Compromise (BEC) attack. Always verify financial requests through a separate, trusted communication channel — never rely on email alone."},
+  {q:"What does enabling two-factor authentication (2FA) protect you from even if your password is stolen?",opts:["Nothing — if your password is stolen, 2FA doesn't help","It prevents the attacker from logging in without also having your second factor (phone, app)","It automatically changes your password after a breach","It encrypts your emails so attackers can't read them"],ans:1,exp:"2FA means an attacker who steals your password still cannot log in without also possessing your second factor (usually your phone). It's one of the most effective defenses available."},
+  {q:"Which of these is the safest way to visit your bank's website?",opts:["Click the link in an email your bank sent you","Search for it on Google and click the first result","Type the bank's URL directly into your browser","Use a bookmark you previously saved yourself"],ans:2,exp:"Typing the URL directly or using a saved bookmark you trust are the safest methods. Email links can point to fake sites, and search results can be manipulated by attackers through paid ads."}
+];
+var cur=0,score=0;
+function initQuiz(){cur=0;score=0;renderQ();}
+function renderQ(){
+  if(cur>=Qs.length){renderScore();return;}
+  var q=Qs[cur];
+  var pct=Math.round((cur/Qs.length)*100);
+  document.getElementById('pbar').style.width=pct+'%';
+  document.getElementById('qbox').innerHTML='<div class="card"><p style="font-size:12px;color:#718096;margin-bottom:8px">Question '+(cur+1)+' of '+Qs.length+'</p><p class="quiz-q">'+q.q+'</p>'+q.opts.map(function(o,i){return'<button class="quiz-opt" onclick="answer('+i+')">'+o+'</button>';}).join('')+'<div id="fb" style="display:none"></div><button class="next-btn" id="nb" style="display:none" onclick="nextQ()">'+(cur===Qs.length-1?'See results':'Next question')+' →</button></div>';
+}
+function answer(i){
+  var q=Qs[cur];
+  var opts=document.querySelectorAll('.quiz-opt');
+  opts.forEach(function(o){o.classList.add('disabled');});
+  var fb=document.getElementById('fb');
+  if(i===q.ans){score++;opts[i].classList.add('correct');fb.className='fb fb-s';fb.innerHTML='✅ Correct! '+q.exp;}
+  else{opts[i].classList.add('wrong');opts[q.ans].classList.remove('disabled');opts[q.ans].classList.add('correct');fb.className='fb fb-d';fb.innerHTML='❌ Incorrect. '+q.exp;}
+  fb.style.display='block';
+  document.getElementById('nb').style.display='inline-block';
+}
+function nextQ(){cur++;renderQ();}
+function renderScore(){
+  document.getElementById('pbar').style.width='100%';
+  var pct=Math.round((score/Qs.length)*100);
+  var msg=pct>=88?'Excellent! You have strong phishing awareness.':pct>=63?'Good work! Review the sections you missed.':'Keep learning — phishing attacks are increasingly common.';
+  document.getElementById('qbox').innerHTML='<div class="card" style="text-align:center;padding:2rem 1rem"><div class="score-circle"><span class="score-num">'+score+'/'+Qs.length+'</span><span class="score-sub">'+pct+'%</span></div><p style="font-size:15px;font-weight:600;color:#2d3748;margin-bottom:8px">'+msg+'</p><p style="font-size:13px;color:#718096;margin-bottom:1rem">Review the training sections to strengthen any weak areas.</p><button class="restart-btn" onclick="initQuiz()">🔄 Retake quiz</button></div>';
+}
+initQuiz();
+</script>
+</body>
+</html>
